@@ -10,18 +10,18 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
+try{
 // prepare and bind
-if($stmt = $conn->prepare("INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)"))
+if($stmt = $conn->prepare("INSERT INTO Authors (firstname, lastname, address) VALUES (?, ?, ?)"))
 {
-  $stmt->bind_param("sss", $firstname, $lastname, $email);
+  $stmt->bind_param("sss", $firstname, $lastname, $address);
 
 // set parameters and execute
 
 
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
-$email = $_POST['email'];
+$address = $_POST['address'];
 $stmt->execute();
 echo "New records created successfully";
 }
@@ -29,4 +29,7 @@ else echo("Statement failed: ". $stmt->error . "<br>");
 
 $stmt->close();
 $conn->close();
+} catch (Exception $e) {
+echo"Error occurred ". $e->getMessage() ."<br>";
+}
 ?>

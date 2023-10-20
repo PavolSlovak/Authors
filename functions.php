@@ -1,5 +1,5 @@
 <?php 
-require_once 'myguestsdb.php';
+require_once 'authorsdb.php';
 
 
 if(isset($_POST["action"])){
@@ -16,9 +16,17 @@ if(isset($_POST["action"])){
     
 function display_data(){
 global $conn;
-$sql = "SELECT id, firstname, lastname, email FROM MyGuests";
+$sql = "SELECT id, firstname, lastname, address FROM Authors";
 $result = $conn->query($sql);
 return $result;
+}
+
+function display_article($AuthorId){
+  global $conn;
+  $sql = "SELECT id, article_name, content FROM Articles WHERE author_id = $AuthorId";
+  
+  $article = mysqli_query($conn, $sql);
+  return $article;
 }
 
  function delete(){
@@ -26,29 +34,36 @@ return $result;
   
     $id = $_POST["id"];
   
-    $rows = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM MyGuests WHERE id = $id"));
-  
-  
-    $res =  mysqli_query($conn, "DELETE FROM MyGuests WHERE id = $id");
+    mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM Articles WHERE author_id = $id"));
+
+    mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM Authors WHERE id = $id"));
     
-    if($res){
+    
+    // First I'm deleting author's articles
+    $res1 =  mysqli_query($conn, "DELETE FROM Articles WHERE author_id = $id");
+    // Second I'm deleting the author
+    $res =  mysqli_query($conn, "DELETE FROM Authors WHERE id = $id");
+    
+    if($res && $res1){
     echo 1;
     }
 
   }
 
   function update(){
-if(isset($_POST['email'])){
+    global $conn;
+
+if(isset($_POST['address'])){
 
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
-$email = $_POST['email'];
+$address = $_POST['address'];
 $id = $_POST['id'];
 
 // query to update data 
 
 
-$res = mysqli_query($conn, "UPDATE MyGuests SET firstname='$firstname', lastname='$lastname', email='$email' WHERE id='$id'");
+$res = mysqli_query($conn, "UPDATE Authors SET firstname='$firstname', lastname='$lastname', address='$address' WHERE id='$id'");
 
 if($res){
 
@@ -58,4 +73,5 @@ if($res){
   }  
 
   }
+
 ?>

@@ -1,20 +1,17 @@
 <?php
 
-// require_once('myguestsdb.php');
-// $sql = "SELECT id, firstname, lastname, email FROM MyGuests";
-// $result = $conn->query($sql);
-
-include 'myguestsdb.php';
+include 'authorsdb.php';
 
 include 'functions.php';
-
 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Guests</title>
+    <title>Authors</title>
+    <link rel="stylesheet" href="mystyle.css">
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,73 +24,45 @@ include 'functions.php';
     </script>
   </head>
 <body>
+
 <div class='container'> 
 
-
-
-
 <!-- Modal Edit -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form name="frmContact" method="post" action="myguestsdbupdate_1.php">
+<?php
+require('modalEdit.html');
+?>
 
-      <div class="modal-body">
+<!-- Modal Add Article -->
+<?php
+require('modalAddArticle.html');
+?>
 
-  <label for="firstname">First name:</label><br>
-  <input type="text" id="firstname" class="form-control"><br>
-  <label for="lastname">Last name:</label><br>
-  <input type="text" id="lastname" class="form-control"><br>
-  <label for="email">Email:</label><br>
-  <input type="text" id="email" class="form-control"><br>
-  <input type="hidden" id="userid" class="form-control">
-  
-  <div class="modal-footer">
-    
-    <a href="#" id="save" class="btn btn-primary" >Save changes</a>
-    <button class="btn btn-secondary translate-middle" data-dismiss="modal">Close</button>
-      </div>
+<h2>Add Author</h2>
+
+<div class="pb-2">
+<form name="frmContact" method="post" action="insertauthor.php">
+    <input type="text" class="form-control my-2" placeholder="First Name" id="firstname" name="firstname">
+    <input type="text" class="form-control my-2" placeholder="Last Name" id="lastname" name="lastname">
+    <input type="text" class="form-control my-2" placeholder="Address" id="address" name="address">
+    <input type="submit" class="btn btn-success" value="Submit">
+</form>
+
 </div>
-      
-      </form>       
-
-    </div>
-  </div>
-</div>
-
-
-
-<h2>Add guests</h2>
-
-<form name="frmContact" method="post" action="myguestsdbinsertdata.php">
-  <label for="firstname">First name:</label><br>
-  <input type="text" id="firstname" name="firstname"><br>
-  <label for="lastname">Last name:</label><br>
-  <input type="text" id="lastname" name="lastname"><br><br>
-  <label for="email">Email:</label><br>
-  <input type="text" id="email" name="email"><br><br>
-  <input type="submit" value="Submit">
-</form> 
- 
 
 <table class="table table-bordered text-center">
 <tr class="bg-dark text-white">
-      <td>Guest ID</td>
+      <td>Add Article</td>
+      <td>Show Articles</td>
       <td>First Name</td>
       <td>Last Name</td>
-      <td>Email</td>
+      <td>Address</td>
       <td>Edit</td>
       <td>Delete</td>
     </tr>
     <tr>
 <tr>
 <?php
+
 
 $result = display_data();
 if ($result->num_rows > 0) {
@@ -102,14 +71,21 @@ if ($result->num_rows > 0) {
 
 ?>
     <tr id="<?php echo $row['id']?>">
+    <!-- Button trigger add article modal -->
+      <td>
+      <a href="#" type="button" class="btn btn-success add-article" data-toggle="modal" data-target="#addArticleModal" data-id="<?php echo $row['id']; ?>">Add</a>
+      </td>
 
-      <td><?php echo $row['id'] ?></td>
+      <td> 
+        <a href="displayArticles.php?id=<?php echo $row['id'] ?>" type="button" class="btn btn-primary" data-id="<?php echo $row['id']; ?>" >Show</a> 
+      </td>
+
       <td data-target ="firstname"><?php echo $row['firstname'] ?></td>
       <td data-target ="lastname"><?php echo $row['lastname'] ?></td>
-      <td data-target ="email"><?php echo $row['email'] ?></td>
+      <td data-target ="address"><?php echo $row['address'] ?></td>
             
-<!-- Button trigger modal -->
-      <td> <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-role="update" data-id="<?php echo $row['id']; ?>" >Update</a> </td>
+<!-- Button trigger update modal -->
+      <td> <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-role="update" data-id="<?php echo $row['id']; ?>" >Update</a> </td>
       <td> <a href="#" type="button" class='btn btn-danger'  onclick = "deletedata(<?php echo $row['id']; ?>);">Delete</a> </td>
     </tr>
     <?php
@@ -123,95 +99,11 @@ if ($result->num_rows > 0) {
 </table>
 
 </div>
+<script src="delete.js"></script>
 
-<script>
-      // Function
-      function deletedata(id){
-        $(document).ready(function(){
-          $.ajax({
-            // Action
-            url: 'functions.php',
-            // Method
-            type: 'POST',
-            data: {
-              // Get value
-              id: id,
-              action: "delete"
-            },
-            success:function(response){
-              // Response is the output of action file
-              if(response == 1){
-                console.log("Data Deleted Successfully");
-                document.getElementById(id).style.display = "none";
-              }
-              else if(response == 0){
-                console.log("Data Cannot Be Deleted", msg);
-              }
-            }
-          });
-        });
-      }
-    </script>
+<script src="update.js"></script>
 
-
-
-<script> // Update Guest Record 
-
-$(document).ready(function(){
-
-  // append values in input fields
-$(document).on('click', 'a[data-role=update]', function(){
-/* alert($(this).data('id')) */
-var id = $(this).data('id');
-var firstname = $('#'+id).children('td[data-target=firstname]').text();
-var lastname = $('#'+id).children('td[data-target=lastname]').text();
-var email = $('#'+id).children('td[data-target=email]').text();
-
-
-// I'll insert those values into modal input fields and toggle modal
-
-$('#firstname').val(firstname);
-$('#lastname').val(lastname);
-$('#email').val(email);
-$('#userid').val(id);
-$('#myModal').modal('toggle');
-
-});
-
-// now create event to get data from fields and update in DB
-
-$('#save').click(function(){
-var id = $('#userid').val()
-var firstname = $('#firstname').val()
-var lastname = $('#lastname').val()
-var email = $('#email').val()
-
-$.ajax({
-
-  url      :'functions.php',
-  method   : 'post',
-  data:    {firstname:firstname, lastname:lastname,email:email, id:id, action: "delete"},
-  success: function(response){
-        // now update information in the guests table
-        $('#'+id).children('td[data-target=firstname]').text(firstname);
-        $('#'+id).children('td[data-target=lastname]').text(lastname);
-        $('#'+id).children('td[data-target=email]').text(email);
-        $('#myModal').modal('toggle');
-
-        if(response == 1){
-          console.log("Your record was successfully updated");
-              }
-              else if(response == 0){
-                console.log("Data Cannot Be Updated");
-              }
-  }
-});
-});
-
-
-});
-  </script>
-
+<script src="addArticle.js"></script>
 
 
 <!-- Optional JavaScript -->
