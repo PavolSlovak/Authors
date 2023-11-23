@@ -61,7 +61,9 @@ require('modalAddArticle.html');
 
 </div>
 
-<table class="table table-bordered text-center">
+<table class="table table-bordered text-center" id="dataTable">
+<thead>
+
 <tr class="bg-dark text-white">
       <td>Add Article</td>
       <td>Show Articles</td>
@@ -73,9 +75,11 @@ require('modalAddArticle.html');
     </tr>
     <tr>
 <tr>
+</thead>
+
+
+<tbody>
 <?php
-
-
 $result = display_data();
 if ($result->num_rows > 0) {
     // output data of each row
@@ -101,6 +105,7 @@ if ($result->num_rows > 0) {
       <td> <a href="#" type="button" class='btn btn-danger'  onclick = "deletedata(<?php echo $row['id']; ?>);">Delete</a> </td>
     </tr>
     <?php
+    
     } 
   }
   else {
@@ -108,6 +113,8 @@ if ($result->num_rows > 0) {
   }
   $conn->close();
 ?>
+        </tbody>
+
 </table>
 
 </div>

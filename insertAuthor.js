@@ -16,22 +16,24 @@ $(document).ready(function () {
         action: "insert",
       },
       success: function (response) {
-        // now update information in the guests table
-        /*  $("#" + id)
-              .children("td[data-target=firstname]")
-              .text(firstname);
-            $("#" + id)
-              .children("td[data-target=lastname]")
-              .text(lastname);
-            $("#" + id)
-              .children("td[data-target=address]")
-              .text(address);
-            $("#editModal").modal("toggle"); */
-
         if (response == 1) {
-          /*  console.log("First Name:", firstname);
-              console.log("Last Name:", lastname);
-              console.log("Address:", address); */
+          // Clear input fields after successful insertion
+          $("#addFirstname").val("");
+          $("#addLastname").val("");
+          $("#addAddress").val("");
+
+          // Get the table body element
+          var tableBody = $("#dataTable tbody");
+          var newRow = $("<tr>");
+          newRow.append("<td>" + firstname + "</td>");
+          newRow.append("<td>" + lastname + "</td>");
+          newRow.append("<td>" + address + "</td>");
+
+          // Append the new row to the table
+          tableBody.append(newRow);
+
+          /* location.reload(); */
+          // To here------------------------
           console.log("Your record was successfully updated");
         } else if (response == 0) {
           console.log("Data Cannot Be Updated");
