@@ -40,11 +40,23 @@ require('modalAddArticle.html');
 <h2>Add Author</h2>
 
 <div class="pb-2">
-<form name="frmContact" method="post" action="insertauthor.php">
+<!-- <form id="authorForm" >
     <input type="text" class="form-control my-2" placeholder="First Name" id="firstname" name="firstname">
     <input type="text" class="form-control my-2" placeholder="Last Name" id="lastname" name="lastname">
     <input type="text" class="form-control my-2" placeholder="Address" id="address" name="address">
-    <input type="submit" class="btn btn-success" value="Submit">
+    <td><a href="#" id="insertAuthor" type="button" class='btn btn-success'>Insert Author</a></td>
+</form> -->
+<form>
+  <div class="modal-body">
+    <label for="addFirstname">First name:</label><br />
+    <input type="text" id="addFirstname" class="form-control" /><br />
+    <label for="addLastname">Last name:</label><br />
+    <input type="text" id="addLastname" class="form-control" /><br />
+    <label for="addAddress">Address:</label><br />
+    <input type="address" id="addAddress" class="form-control" /><br />
+
+      <a href="#" id="insertAuthor" class="btn btn-primary">Save changes</a>
+  </div>
 </form>
 
 </div>
@@ -110,5 +122,9 @@ if ($result->num_rows > 0) {
     <!-- Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
+
+    <script src="insertAuthor.js"></script>
+
+
+  </body>
 </html>

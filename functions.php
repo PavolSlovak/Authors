@@ -1,6 +1,8 @@
 <?php 
 require_once 'authorsdb.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if(isset($_POST["action"])){
     
@@ -9,6 +11,9 @@ if(isset($_POST["action"])){
     }
     if($_POST["action"]=="update"){
       update();
+      }
+    if($_POST["action"]=="insert"){
+      insert();
       }
     }
 
@@ -71,6 +76,38 @@ if($res){
 }
 
   }  
+
+  }
+  function insert(){
+    global $conn;
+  
+   
+    
+       try{
+        // prepare and bind
+        if($stmt = $conn->prepare("INSERT INTO Authors (firstname, lastname, address) VALUES (?, ?, ?)"))
+        {
+          $stmt->bind_param("sss", $firstname, $lastname, $address);
+        
+        // set parameters and execute
+      echo $firstname;
+        echo $lastname;
+        echo $address;
+        
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $address = $_POST['address'];
+        $stmt->execute();
+        /* echo "New records created successfully"; */
+      echo 1;
+        }
+        else echo("Statement failed: ". $stmt->error . "<br>");
+        
+        $stmt->close();
+        $conn->close();
+        } catch (Exception $e) {
+        echo"Error occurred ". $e->getMessage() ."<br>";
+        }
 
   }
 
