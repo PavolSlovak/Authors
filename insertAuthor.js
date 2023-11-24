@@ -25,9 +25,22 @@ $(document).ready(function () {
           // Get the table body element
           var tableBody = $("#dataTable tbody");
           var newRow = $("<tr>");
+
+          newRow.append(
+            `<td><a href="#" type="button" class="btn btn-success add-article" data-toggle="modal" data-target="#addArticleModal" data-id="<?php echo $row['id']; ?>">Add</a></td>`
+          );
+          newRow.append(
+            `<td><a href="displayArticles.php?id=<?php echo $row['id'] ?>" type="button" class="btn btn-primary" data-id="<?php echo $row['id']; ?>" >Show</a></td>`
+          );
           newRow.append("<td>" + firstname + "</td>");
           newRow.append("<td>" + lastname + "</td>");
           newRow.append("<td>" + address + "</td>");
+          newRow.append(
+            `<td> <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-role="update" data-id="<?php echo $row['id']; ?>" >Update</a> </td>`
+          );
+          newRow.append(
+            `<td> <a href="#" type="button" class='btn btn-danger'  onclick = "deletedata(<?php echo $row['id']; ?>);">Delete</a> </td>`
+          );
 
           // Append the new row to the table
           tableBody.append(newRow);
