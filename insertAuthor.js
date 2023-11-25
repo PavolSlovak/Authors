@@ -16,8 +16,9 @@ $(document).ready(function () {
         action: "insert",
       },
       success: function (response) {
-        console.log(response);
-        if (response) {
+        var id = response;
+        console.log(id);
+        if (id) {
           // Clear input fields after successful insertion
           $("#addFirstname").val("");
           $("#addLastname").val("");
@@ -25,7 +26,7 @@ $(document).ready(function () {
 
           // Get the table body element
           var tableBody = $("#dataTable tbody");
-          var newRow = $("<tr>");
+          var newRow = $("<tr id='" + id + "'>");
 
           newRow.append(
             `<td><a href="#" type="button" class="btn btn-success add-article" data-toggle="modal" data-target="#addArticleModal" data-id="<?php echo $row['id']; ?>">Add</a></td>`
@@ -40,7 +41,7 @@ $(document).ready(function () {
             `<td> <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-role="update" data-id="<?php echo $row['id']; ?>" >Update</a> </td>`
           );
           newRow.append(
-            `<td> <a href="#" type="button" class='btn btn-danger' data-id="<?php echo $row['id']; ?> "onclick="deletedata(this);"">Delete</a> </td>`
+            `<td> <a href="#" type="button" class='btn btn-danger' onclick="deletedata(${id});"">Delete</a> </td>`
           );
 
           // Append the new row to the table
