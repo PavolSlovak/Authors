@@ -5,7 +5,7 @@ $(document).ready(function () {
   $(document).on("click", "a[data-role=update]", function () {
     /* alert($(this).data('id')) */
     var id = $(this).data("id");
-
+    console.log(id);
     var firstname = $("#" + id)
       .children("td[data-target=firstname]")
       .text();

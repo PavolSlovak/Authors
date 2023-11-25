@@ -29,16 +29,16 @@ $(document).ready(function () {
           var newRow = $("<tr id='" + id + "'>");
 
           newRow.append(
-            `<td><a href="#" type="button" class="btn btn-success add-article" data-toggle="modal" data-target="#addArticleModal" data-id="<?php echo $row['id']; ?>">Add</a></td>`
+            `<td><a href="#" type="button" class="btn btn-success add-article" data-toggle="modal" data-target="#addArticleModal" data-id="${id}">Add</a></td>`
           );
           newRow.append(
-            `<td><a href="displayArticles.php?id=<?php echo $row['id'] ?>" type="button" class="btn btn-primary" data-id="<?php echo $row['id']; ?>" >Show</a></td>`
+            `<td><a href="displayArticles.php?id=${id}" type="button" class="btn btn-primary" data-id="${id}" >Show</a></td>`
           );
           newRow.append("<td>" + firstname + "</td>");
           newRow.append("<td>" + lastname + "</td>");
           newRow.append("<td>" + address + "</td>");
           newRow.append(
-            `<td> <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-role="update" data-id="<?php echo $row['id']; ?>" >Update</a> </td>`
+            `<td> <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-role="update" data-id="${id}" >Update</a> </td>`
           );
           newRow.append(
             `<td> <a href="#" type="button" class='btn btn-danger' onclick="deletedata(${id});"">Delete</a> </td>`
