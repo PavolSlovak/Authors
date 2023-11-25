@@ -16,7 +16,8 @@ $(document).ready(function () {
         action: "insert",
       },
       success: function (response) {
-        if (response == 1) {
+        console.log(response);
+        if (response) {
           // Clear input fields after successful insertion
           $("#addFirstname").val("");
           $("#addLastname").val("");
@@ -39,7 +40,7 @@ $(document).ready(function () {
             `<td> <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-role="update" data-id="<?php echo $row['id']; ?>" >Update</a> </td>`
           );
           newRow.append(
-            `<td> <a href="#" type="button" class='btn btn-danger'  onclick = "deletedata(<?php echo $row['id']; ?>);">Delete</a> </td>`
+            `<td> <a href="#" type="button" class='btn btn-danger' data-id="<?php echo $row['id']; ?> "onclick="deletedata(this);"">Delete</a> </td>`
           );
 
           // Append the new row to the table

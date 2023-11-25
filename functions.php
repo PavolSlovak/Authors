@@ -98,8 +98,10 @@ if($res){
         $lastname = $_POST['lastname'];
         $address = $_POST['address'];
         $stmt->execute();
+        $newAuthorId = mysqli_insert_id($conn);
+
         /* echo "New records created successfully"; */
-      echo 1;
+      echo $newAuthorId;
         }
         else echo("Statement failed: ". $stmt->error . "<br>");
         
