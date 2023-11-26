@@ -6,6 +6,7 @@ $(document).ready(function () {
     /* alert($(this).data('id')) */
     var id = $(this).data("id");
     console.log(id);
+
     var firstname = $("#" + id)
       .children("td[data-target=firstname]")
       .text();

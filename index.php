@@ -29,7 +29,7 @@ include 'functions.php';
 
 <!-- Modal Edit -->
 <?php
-require('modalEdit.html');
+require('modalEdit.php');
 ?>
 
 <!-- Modal Add Article -->
