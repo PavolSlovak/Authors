@@ -31,7 +31,7 @@ $(document).ready(function () {
 
             newRow.append(
               `<td>
-            <a href="#" type="button" class="btn btn-success add-article" data-toggle="modal" data-target="#addArticleModal" data-id='${id}'>Add</a>
+            <a href="#" type="button" class="btn btn-success add-article-btn" data-toggle="modal" data-target="#addArticleModal" data-id='${id}'>Add</a>
             </td>`
             );
             newRow.append(
@@ -69,7 +69,10 @@ $(document).ready(function () {
               $("#userid").val(id);
               $("#editModal").modal("toggle");
             });
-
+            $(".add-article-btn").on("click", function () {
+              var authorId = id; // Get the author's ID from the button
+              $("#id").val(authorId); // Set the hidden input field with the author's ID
+            });
             /* location.reload(); */
 
             // To here------------------------
