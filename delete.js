@@ -15,7 +15,7 @@ function deletedata(id) {
         // Response is the output of action file
         if (response == 1) {
           console.log("Data Deleted Successfully", id);
-          document.getElementById(id).style.display = "none";
+          document.getElementById(id).remove();
         } else if (response == 0) {
           console.log("Data Cannot Be Deleted", msg);
         }
